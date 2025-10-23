@@ -16,6 +16,6 @@ class JenisHewanController extends Controller
         // $jenisHewan = JenisHewan::select('idjenis_hewan', 'nama_jenis_hewan')->get();
 
         // Mengirim data ke view
-        return view('jenishewan.index', compact('jenisHewan'));
+        return view('jenis_hewan.index', compact('jenisHewan'));
     }
 }

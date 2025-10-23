@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data User</title>
+    <title>Data Pet</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,7 +22,7 @@
             margin-top: 20px;
         }
         table {
-            width: 85%;
+            width: 90%;
             margin: 20px auto;
             border-collapse: collapse;
             background: white;
@@ -52,32 +52,41 @@
     </style>
 </head>
 <body>
-    <header>Data User</header>
+<header>Data Pet</header>
 
-    <h2>Daftar User</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>No. WA Pemilik</th>
-                <th>Alamat Pemilik</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($user as $u)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $u->nama }}</td>
-                <td>{{ $u->email }}</td>
-                <td>{{ $u->pemilik->no_wa ?? '-' }}</td>
-                <td>{{ $u->pemilik->alamat ?? '-' }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+<h2>Daftar Pet</h2>
+<table>
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Nama Pet</th>
+            <th>Tanggal Lahir</th>
+            <th>Warna/Tanda</th>
+            <th>Jenis Kelamin</th>
+            <th>Ras Hewan</th>
+            <th>Pemilik</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($pet as $p)
+        <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $p->nama }}</td>
+            <td>{{ $p->tanggal_lahir }}</td>
+            <td>{{ $p->warna_tanda }}</td>
+            <td>
+                @if($p->jenis_kelamin == 'L') Jantan
+                @elseif($p->jenis_kelamin == 'P') Betina
+                @else -
+                @endif
+            </td>
+            <td>{{ $p->rasHewan->nama_ras ?? '-' }}</td>
+            <td>{{ $p->pemilik->user->nama ?? '-' }}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 
-    <footer>© 2025 Sistem Informasi Klinik Hewan</footer>
+<footer>© 2025 Sistem Informasi Klinik Hewan</footer>
 </body>
 </html>

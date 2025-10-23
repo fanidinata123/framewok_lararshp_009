@@ -33,6 +33,21 @@ Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
 use App\Http\Controllers\KategoriKlinisController;
 Route::get('/kategori-klinis', [KategoriKlinisController::class, 'index'])->name('kategori-klinis');
 
+use App\Http\Controllers\KodeTindakanTerapiController;
+Route::get('/kode-tindakan', [KodeTindakanTerapiController::class, 'index'])->name('kode-tindakan');
+
+use App\Http\Controllers\PetController;
+Route::get('/pet', [PetController::class, 'index'])->name('pet');
+
+use App\Http\Controllers\RoleController;
+Route::get('/role', [RoleController::class, 'index'])->name('role');
+
+use App\Http\Controllers\RoleUserController;
+Route::get('/role-user', [RoleUserController::class, 'index'])->name('role-user');
+
+
+
+
 
 
 

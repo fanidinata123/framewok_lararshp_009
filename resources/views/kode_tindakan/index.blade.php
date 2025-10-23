@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Data User</title>
+    <title>Data Kode Tindakan Terapi</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -22,7 +22,7 @@
             margin-top: 20px;
         }
         table {
-            width: 85%;
+            width: 90%;
             margin: 20px auto;
             border-collapse: collapse;
             background: white;
@@ -52,32 +52,32 @@
     </style>
 </head>
 <body>
-    <header>Data User</header>
+<header>Data Kode Tindakan Terapi</header>
 
-    <h2>Daftar User</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>No</th>
-                <th>Nama</th>
-                <th>Email</th>
-                <th>No. WA Pemilik</th>
-                <th>Alamat Pemilik</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($user as $u)
-            <tr>
-                <td>{{ $loop->iteration }}</td>
-                <td>{{ $u->nama }}</td>
-                <td>{{ $u->email }}</td>
-                <td>{{ $u->pemilik->no_wa ?? '-' }}</td>
-                <td>{{ $u->pemilik->alamat ?? '-' }}</td>
-            </tr>
-            @endforeach
-        </tbody>
-    </table>
+<h2>Daftar Kode Tindakan Terapi</h2>
+<table>
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Kode</th>
+            <th>Deskripsi</th>
+            <th>Kategori</th>
+            <th>Kategori Klinis</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach ($tindakan as $t)
+        <tr>
+            <td>{{ $loop->iteration }}</td>
+            <td>{{ $t->kode }}</td>
+            <td>{{ $t->deskripsi_tindakan_terapi }}</td>
+            <td>{{ $t->kategori->nama_kategori ?? '-' }}</td>
+            <td>{{ $t->kategoriKlinis->nama_kategori_klinis ?? '-' }}</td>
+        </tr>
+        @endforeach
+    </tbody>
+</table>
 
-    <footer>© 2025 Sistem Informasi Klinik Hewan</footer>
+<footer>© 2025 Sistem Informasi Klinik Hewan</footer>
 </body>
 </html>

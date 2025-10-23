@@ -10,23 +10,23 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $table = 'user'; // sesuai tabel di database
+    protected $table = 'user';
     protected $primaryKey = 'iduser';
-    public $timestamps = false; // karena tidak ada created_at & updated_at
+    public $timestamps = false;
 
-    protected $fillable = [
-        'nama',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['nama', 'email', 'password'];
+    protected $hidden = ['password'];
 
-    protected $hidden = [
-        'password',
-    ];
+    // 🔹 Relasi ke Role (many-to-many lewat role_user)
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user', 'iduser', 'idrole')
+                    ->withPivot('status');
+    }
 
+    // 🔹 Relasi opsional ke Pemilik (kalau dipakai di modul)
     public function pemilik()
     {
-        // 1 user punya 1 pemilik
         return $this->hasOne(Pemilik::class, 'iduser', 'iduser');
     }
 }
