@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin;
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Pemilik;
 
 class PemilikController extends Controller
@@ -13,6 +13,6 @@ class PemilikController extends Controller
         $pemilik = Pemilik::with('user')->get();
 
         // Mengirim data ke view
-        return view('pemilik.index', compact('pemilik'));
+        return view('admin.pemilik.index', compact('pemilik'));
     }
 }

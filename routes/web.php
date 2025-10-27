@@ -1,55 +1,58 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiteController;
+use App\Http\Controllers\Admin\DashboardAdminController;
+use App\Http\Controllers\Resepsionis\DashboardResepsionisController;
+use App\Http\Controllers\JenisHewanController;
+use App\Http\Controllers\PemilikController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\RasHewanController;
+use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\KategoriKlinisController;
+use App\Http\Controllers\KodeTindakanTerapiController;
+use App\Http\Controllers\PetController;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\RoleUserController;
+use App\Http\Controllers\Auth\LoginController;
 
-//  Route untuk cek koneksi database
+Route::get('/', [SiteController::class, 'home'])->name('site.home');
 Route::get('/cek-koneksi', [SiteController::class, 'cekKoneksi'])->name('site.cek-koneksi');
 
-// Halaman utama
+Auth::routes();
+
+// 🔹 Setelah login (halaman utama)
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+// 🔹 Halaman utama
 Route::get('/', [SiteController::class, 'home'])->name('home');
 
-// Halaman lain
+// 🔹 Halaman statis
 Route::get('/layanan', [SiteController::class, 'layanan'])->name('layanan');
 Route::get('/kontak', [SiteController::class, 'kontak'])->name('kontak');
 Route::get('/struktur', [SiteController::class, 'struktur'])->name('struktur');
-Route::get('/login', [SiteController::class, 'login'])->name('login');
+Route::get('/admin/dashboard', [DashboardAdminController::class, 'index'])->name('admin.dashboard');
+Route::get('/resepsionis/dashboard', [DashboardResepsionisController::class, 'index'])->name('resepsionis.dashboard');
 
-use App\Http\Controllers\JenisHewanController;
-Route::get('/jenis-hewan', [JenisHewanController::class, 'index'])->name('site.jenis-hewan');
 
-use App\Http\Controllers\PemilikController;
-Route::get('/pemilik', [PemilikController::class, 'index'])->name('site.pemilik');
-
-use App\Http\Controllers\UserController;
-Route::get('/user', [UserController::class, 'index'])->name('site.user');
-
-use App\Http\Controllers\RasHewanController;
+// 🔹 View data (modul 9)
+Route::get('/jenis-hewan', [JenisHewanController::class, 'index'])->name('jenis-hewan');
+Route::get('/pemilik', [PemilikController::class, 'index'])->name('pemilik');
+Route::get('/user', [UserController::class, 'index'])->name('user');
 Route::get('/ras-hewan', [RasHewanController::class, 'index'])->name('ras-hewan');
-
-use App\Http\Controllers\KategoriController;
 Route::get('/kategori', [KategoriController::class, 'index'])->name('kategori');
-
-use App\Http\Controllers\KategoriKlinisController;
 Route::get('/kategori-klinis', [KategoriKlinisController::class, 'index'])->name('kategori-klinis');
-
-use App\Http\Controllers\KodeTindakanTerapiController;
 Route::get('/kode-tindakan', [KodeTindakanTerapiController::class, 'index'])->name('kode-tindakan');
-
-use App\Http\Controllers\PetController;
 Route::get('/pet', [PetController::class, 'index'])->name('pet');
-
-use App\Http\Controllers\RoleController;
 Route::get('/role', [RoleController::class, 'index'])->name('role');
-
-use App\Http\Controllers\RoleUserController;
 Route::get('/role-user', [RoleUserController::class, 'index'])->name('role-user');
 
+// 🔹 LOGIN MANUAL
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-
-
-
-
-
-
-
+// 🔹 Home setelah login
+Route::get('/home', function () {
+    return view('home');
+})->name('dashboard');
