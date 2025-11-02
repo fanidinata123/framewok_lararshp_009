@@ -8,6 +8,6 @@ class DashboardResepsionisController extends Controller
 {
     public function index()
     {
-        return view('resepsionis.dashboard');
+        return view('resepsionis.dashboard.index');
     }
 }

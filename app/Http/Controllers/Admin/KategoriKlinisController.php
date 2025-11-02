@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin; 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\KategoriKlinis;
 
@@ -10,6 +11,6 @@ class KategoriKlinisController extends Controller
     public function index()
     {
         $kategoriKlinis = KategoriKlinis::all();
-        return view('kategori_klinis.index', compact('kategoriKlinis'));
+        return view('admin.kategori_klinis.index', compact('kategoriKlinis'));
     }
 }

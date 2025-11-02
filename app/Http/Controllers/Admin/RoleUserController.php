@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin; 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -13,6 +14,6 @@ class RoleUserController extends Controller
         $user = User::with('roles')->get();
 
         // Kirim ke view
-        return view('role_user.index', compact('user'));
+        return view('admin.role_user.index', compact('user'));
     }
 }

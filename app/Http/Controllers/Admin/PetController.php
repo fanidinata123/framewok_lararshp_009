@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin; 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Pet;
 
@@ -11,6 +12,6 @@ class PetController extends Controller
     {
         // Ambil semua data Pet dengan relasi Pemilik dan Ras Hewan
         $pet = Pet::with(['pemilik.user', 'rasHewan'])->get();
-        return view('pet.index', compact('pet'));
+        return view('admin.pet.index', compact('pet'));
     }
 }

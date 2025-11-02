@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin; 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\KodeTindakanTerapi;
 
@@ -11,6 +12,6 @@ class KodeTindakanTerapiController extends Controller
     {
         // Ambil semua data dengan relasi kategori & kategori klinis
         $tindakan = KodeTindakanTerapi::with(['kategori', 'kategoriKlinis'])->get();
-        return view('kode_tindakan.index', compact('tindakan'));
+        return view('admin.kode_tindakan.index', compact('tindakan'));
     }
 }

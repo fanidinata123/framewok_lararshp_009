@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin; 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\JenisHewan;
 
@@ -16,6 +17,6 @@ class JenisHewanController extends Controller
         // $jenisHewan = JenisHewan::select('idjenis_hewan', 'nama_jenis_hewan')->get();
 
         // Mengirim data ke view
-        return view('jenis_hewan.index', compact('jenisHewan'));
+        return view('admin.jenis_hewan.index', compact('jenisHewan'));
     }
 }

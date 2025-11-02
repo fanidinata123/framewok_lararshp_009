@@ -8,6 +8,7 @@ class DashboardAdminController extends Controller
 {
     public function index()
     {
-        return view('admin.dashboard');
+        // arahkan ke folder views/admin/dashboard/index.blade.php
+        return view('admin.dashboard.index');
     }
 }

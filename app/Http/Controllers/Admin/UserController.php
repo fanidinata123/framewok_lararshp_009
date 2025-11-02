@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Admin; 
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -9,10 +10,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        // Mengambil semua data user beserta data pemilik
         $user = User::with('pemilik')->get();
-
-        // Mengirim data ke view
-        return view('user.index', compact('user'));
+        return view('admin.user.index', compact('user'));
     }
 }
