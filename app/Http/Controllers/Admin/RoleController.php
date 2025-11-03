@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Admin; 
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -10,10 +10,38 @@ class RoleController extends Controller
 {
     public function index()
     {
-        // Ambil semua role dengan relasi users
-        $role = Role::with('users')->get();
+        $roles = Role::all();
+        return view('admin.role.index', compact('roles'));
+    }
 
-        // Kirim ke view
-        return view('admin.role.index', compact('role'));
+    public function create()
+    {
+        return view('admin.role.create');
+    }
+
+    public function store(Request $request)
+    {
+        $validated = $this->validateRole($request);
+        $formattedName = $this->formatRoleName($validated['nama_role']);
+        $this->createRole($formattedName);
+
+        return redirect()->route('admin.role.index')->with('success', 'Role berhasil ditambahkan!');
+    }
+
+    private function validateRole(Request $request)
+    {
+        return $request->validate([
+            'nama_role' => 'required|string|max:50'
+        ]);
+    }
+
+    private function createRole($nama)
+    {
+        Role::create(['nama_role' => $nama]);
+    }
+
+    private function formatRoleName($nama)
+    {
+        return ucwords(strtolower($nama));
     }
 }

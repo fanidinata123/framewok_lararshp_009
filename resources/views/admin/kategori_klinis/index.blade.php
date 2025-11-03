@@ -15,25 +15,50 @@
             text-align: center;
             padding: 15px 0;
             font-size: 22px;
+            letter-spacing: 1px;
         }
         h2 {
             text-align: center;
             color: #333;
             margin-top: 20px;
         }
+        .container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin: 15px 0;
+        }
+        .btn-add {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 18px;
+            border: none;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 15px;
+            transition: background-color 0.2s;
+        }
+        .btn-add:hover {
+            background-color: #218838;
+        }
         table {
-            width: 90%;
-            margin: 20px auto;
+            width: 80%;
+            margin: 0 auto 30px auto;
             border-collapse: collapse;
             background: white;
+            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
             border-radius: 6px;
             overflow: hidden;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
         }
         th {
             background-color: #007bff;
             color: white;
             padding: 10px;
+            text-transform: uppercase;
         }
         td {
             padding: 10px;
@@ -42,22 +67,32 @@
         }
         tr:hover {
             background-color: #f1f9ff;
+            transition: 0.2s;
         }
         footer {
             text-align: center;
             color: #666;
             padding: 10px;
+            font-size: 13px;
             margin-top: 40px;
         }
     </style>
 </head>
 <body>
-<header>Data Kategori Klinis</header>
+    <header>Data Kategori Klinis</header>
 
-<h2>Daftar Kategori Klinis</h2>
-<table>
-    <thead>
-        <tr>
+    <h2>Daftar Kategori Klinis</h2>
+
+    <!-- Tombol tambah di tengah -->
+    <div class="container">
+        <a href="{{ route('admin.kategori-klinis.create') }}" class="btn-add">
+            <span style="font-size: 18px;">➕</span> Tambah Kategori Klinis
+        </a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
             <th>No</th>
             <th> Nama Kategori Klinis</th>
         </tr>

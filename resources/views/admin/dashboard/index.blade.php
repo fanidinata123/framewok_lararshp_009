@@ -6,78 +6,73 @@
     <style>
         body {
             font-family: 'Segoe UI', Arial, sans-serif;
-            background-color: #eef3fb;
             margin: 0;
             padding: 0;
+            display: flex;
+            background-color: #eef3fb;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background-color: #0d6efd;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            overflow-y: auto;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            font-size: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar a {
+            display: block;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #0056b3;
+        }
+
+        .sidebar .logout {
+            background-color: #dc3545;
+            text-align: center;
+            margin: 20px;
+            border-radius: 5px;
+            padding: 10px;
+            display: block;
+        }
+
+        /* Konten utama */
+        .content {
+            margin-left: 240px;
+            padding: 30px;
+            flex: 1;
+            background-color: #f8f9fa;
+            min-height: 100vh;
         }
 
         header {
             background-color: #007bff;
             color: white;
-            text-align: center;
-            padding: 25px 0;
-            font-size: 26px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-
-        nav {
-            background-color: #0d6efd;
-            padding: 12px 0;
-            text-align: center;
-            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 600;
-            padding: 10px 18px;
-            transition: 0.2s;
-            border-radius: 6px;
-            margin: 0 3px;
-        }
-
-        nav a:hover {
-            background-color: #0056b3;
-        }
-
-        nav .logout {
-            background-color: #dc3545;
-            color: white;
-        }
-
-        nav .logout:hover {
-            background-color: #b02a37;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 30px auto;
-            background: white;
-            padding: 25px 30px;
-            border-radius: 10px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        h2 {
-            color: #007bff;
-            text-align: center;
-            font-size: 24px;
+            padding: 15px;
+            border-radius: 8px;
             margin-bottom: 20px;
-        }
-
-        p {
             text-align: center;
-            font-size: 16px;
-            color: #333;
         }
 
         .grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 20px;
             margin-top: 25px;
         }
@@ -100,59 +95,57 @@
 
         footer {
             text-align: center;
-            padding: 20px;
             color: #666;
-            font-size: 14px;
+            font-size: 13px;
             margin-top: 40px;
         }
     </style>
 </head>
 <body>
 
-    <header>RSHP Dashboard Administrator</header>
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <a href="{{ route('admin.dashboard') }}">🏠 Dashboard</a>
+        <a href="{{ route('admin.user.index') }}">👤 User</a>
+        <a href="{{ route('admin.role.index') }}">⚙️ Role</a>
+        <a href="{{ route('admin.role-user.index') }}">🔑 Role User</a>
+        <a href="{{ route('admin.jenis-hewan.index') }}">🐾 Jenis Hewan</a>
+        <a href="{{ route('admin.ras-hewan.index') }}">🐕 Ras Hewan</a>
+        <a href="{{ route('admin.pemilik.index') }}">👨 Pemilik</a>
+        <a href="{{ route('admin.pet.index') }}">🐈 Pet</a>
+        <a href="{{ route('admin.kategori.index') }}">📂 Kategori</a>
+        <a href="{{ route('admin.kategori-klinis.index') }}">🧪 Kategori Klinis</a>
+        <a href="{{ route('admin.kode-tindakan.index') }}">💊 Kode Tindakan</a>
 
-    <nav>
-        <a href="{{ route('admin.dashboard') }}">Dashboard</a>
-        <a href="{{ route('user') }}">User</a>
-        <a href="{{ route('role') }}">Role</a>
-        <a href="{{ route('role-user') }}">Role User</a>
-        <a href="{{ route('jenis-hewan') }}">Jenis Hewan</a>
-        <a href="{{ route('ras-hewan') }}">Ras Hewan</a>
-        <a href="{{ route('pemilik') }}">Pemilik</a>
-        <a href="{{ route('pet') }}">Pet</a>
-        <a href="{{ route('kategori') }}">Kategori</a>
-        <a href="{{ route('kategori-klinis') }}">Kategori Klinis</a>
-        <a href="{{ route('kode-tindakan') }}">Kode Tindakan Terapi</a>
-
-        <form method="POST" action="{{ route('logout') }}" style="display:inline;">
+        <form action="{{ route('logout') }}" method="POST">
             @csrf
-            <button type="submit" class="logout" style="
-                border:none;
-                cursor:pointer;
-                font-weight:bold;
-                padding:8px 15px;
-                border-radius:6px;
-            ">Logout</button>
+            <button type="submit" class="logout">🚪 Logout</button>
         </form>
-    </nav>
-
-    <div class="container">
-        <h2>Selamat Datang, {{ Auth::user()->nama ?? 'Admin' }}</h2>
-        <p>Anda login sebagai <strong>Administrator</strong></p>
-
-        <div class="grid">
-            <a href="{{ route('user') }}" class="card">User</a>
-            <a href="{{ route('role-user') }}" class="card">Role User</a>
-            <a href="{{ route('jenis-hewan') }}" class="card">Jenis Hewan</a>
-            <a href="{{ route('ras-hewan') }}" class="card">Ras Hewan</a>
-            <a href="{{ route('pemilik') }}" class="card">Pemilik</a>
-            <a href="{{ route('pet') }}" class="card">Pet</a>
-            <a href="{{ route('kategori') }}" class="card">Kategori</a>
-            <a href="{{ route('kategori-klinis') }}" class="card">Kategori Klinis</a>
-            <a href="{{ route('kode-tindakan') }}" class="card">Kode Tindakan Terapi</a>
-        </div>
     </div>
 
-    <footer>© 2025 Sistem Informasi Klinik Hewan RSHP</footer>
+    <!-- Konten -->
+    <div class="content">
+        <header>
+            <h2>Selamat Datang, {{ Auth::user()->nama ?? 'Administrator' }}</h2>
+        </header>
+
+        <p style="text-align:center;">Anda login sebagai <strong>Administrator</strong></p>
+
+        <div class="grid">
+            <a href="{{ route('admin.user.index') }}" class="card">User</a>
+            <a href="{{ route('admin.role-user.index') }}" class="card">Role User</a>
+            <a href="{{ route('admin.jenis-hewan.index') }}" class="card">Jenis Hewan</a>
+            <a href="{{ route('admin.ras-hewan.index') }}" class="card">Ras Hewan</a>
+            <a href="{{ route('admin.pemilik.index') }}" class="card">Pemilik</a>
+            <a href="{{ route('admin.pet.index') }}" class="card">Pet</a>
+            <a href="{{ route('admin.kategori.index') }}" class="card">Kategori</a>
+            <a href="{{ route('admin.kategori-klinis.index') }}" class="card">Kategori Klinis</a>
+            <a href="{{ route('admin.kode-tindakan.index') }}" class="card">Kode Tindakan Terapi</a>
+        </div>
+
+        <footer>© 2025 Sistem Informasi Klinik Hewan RSHP</footer>
+    </div>
+
 </body>
 </html>
