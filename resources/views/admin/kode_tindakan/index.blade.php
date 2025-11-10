@@ -1,118 +1,69 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
-    <title>Data Kode Tindakan</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f2f6fc;
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            text-align: center;
-            padding: 15px 0;
-            font-size: 22px;
-            letter-spacing: 1px;
-        }
-        h2 {
-            text-align: center;
-            color: #333;
-            margin-top: 20px;
-        }
-        .container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin: 15px 0;
-        }
-        .btn-add {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 18px;
-            border: none;
-            border-radius: 5px;
-            text-decoration: none;
-            font-weight: bold;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 15px;
-            transition: background-color 0.2s;
-        }
-        .btn-add:hover {
-            background-color: #218838;
-        }
-        table {
-            width: 80%;
-            margin: 0 auto 30px auto;
-            border-collapse: collapse;
-            background: white;
-            box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
-            border-radius: 6px;
-            overflow: hidden;
-        }
-        th {
-            background-color: #007bff;
-            color: white;
-            padding: 10px;
-            text-transform: uppercase;
-        }
-        td {
-            padding: 10px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
-        tr:hover {
-            background-color: #f1f9ff;
-            transition: 0.2s;
-        }
-        footer {
-            text-align: center;
-            color: #666;
-            padding: 10px;
-            font-size: 13px;
-            margin-top: 40px;
-        }
+    <meta charset="UTF-8">
+    <title>Data Kode Tindakan Terapi</title>
+     <style>
+        body {font-family:'Segoe UI',Arial;background:#f2f6fc;margin:0;padding:0;}
+        header{background:#007bff;color:#fff;text-align:center;padding:15px 0;font-size:22px;}
+        h2{text-align:center;color:#333;margin-top:20px;}
+        .nav-container{width:85%;margin:20px auto;display:flex;justify-content:space-between;align-items:center;}
+        .btn{padding:10px 18px;border-radius:5px;text-decoration:none;font-weight:bold;color:#fff;transition:.2s;}
+        .btn-add{background:#28a745;}.btn-add:hover{background:#218838;}
+        .btn-back{background:#6c757d;}.btn-back:hover{background:#5a6268;}
+        table{width:85%;margin:0 auto 40px;border-collapse:collapse;background:white;box-shadow:0 0 8px rgba(0,0,0,0.1);border-radius:6px;}
+        th{background:#007bff;color:white;padding:10px;text-transform:uppercase;}
+        td{padding:10px;text-align:center;border-bottom:1px solid #ddd;}
+        tr:hover{background:#f1f9ff;}
+        .btn-edit,.btn-delete{padding:5px 10px;border:none;border-radius:4px;color:white;font-size:14px;cursor:pointer;}
+        .btn-edit{background:#ffc107;}.btn-edit:hover{background:#e0a800;}
+        .btn-delete{background:#dc3545;}.btn-delete:hover{background:#b02a37;}
+        footer{text-align:center;color:#666;padding:10px;font-size:13px;}
     </style>
 </head>
 <body>
-    <header>Data Kode Tindakan</header>
+<header>Data Kode Tindakan Terapi</header>
+<h2>Daftar Kode Tindakan</h2>
 
-    <h2>Daftar Kode Tindakan</h2>
+<div class="nav-container">
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-back">⬅ Kembali ke Dashboard</a>
+    <a href="{{ route('admin.kode-tindakan.create') }}" class="btn btn-add">➕ Tambah Kode Tindakan</a>
+</div>
 
-    <!-- Tombol tambah di tengah -->
-    <div class="container">
-        <a href="{{ route('admin.kode-tindakan.create') }}" class="btn-add">
-            <span style="font-size: 18px;">➕</span> Tambah Kode Tindakan
-        </a>
-    </div>
-
-    <table>
-        <thead>
-            <tr>
+<table>
+    <thead>
+        <tr>
             <th>No</th>
             <th>Kode</th>
             <th>Deskripsi</th>
             <th>Kategori</th>
             <th>Kategori Klinis</th>
+            <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($kodeTindakan as $item)
+        @forelse ($kodeTindakan as $item)
         <tr>
             <td>{{ $loop->iteration }}</td>
             <td>{{ $item->kode }}</td>
             <td>{{ $item->deskripsi_tindakan_terapi }}</td>
             <td>{{ $item->kategori->nama_kategori ?? '-' }}</td>
             <td>{{ $item->kategoriKlinis->nama_kategori_klinis ?? '-' }}</td>
+            <td>
+                <a href="{{ route('admin.kode-tindakan.edit', $item->idkode_tindakan_terapi) }}" class="btn-edit">✏ Edit</a>
+                <form action="{{ route('admin.kode-tindakan.destroy', $item->idkode_tindakan_terapi) }}" method="POST" style="display:inline;">
+                    @csrf @method('DELETE')
+                    <button type="submit" class="btn-delete" onclick="return confirm('Hapus data ini?')">🗑 Hapus</button>
+                </form>
+            </td>
         </tr>
-        @endforeach
+        @empty
+        <tr><td colspan="6">Tidak ada data tindakan.</td></tr>
+        @endforelse
     </tbody>
 </table>
 
 <footer>© 2025 Sistem Informasi Klinik Hewan</footer>
 </body>
 </html>
+

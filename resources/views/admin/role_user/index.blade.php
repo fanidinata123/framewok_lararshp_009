@@ -10,6 +10,7 @@
             margin: 0;
             padding: 0;
         }
+
         header {
             background-color: #007bff;
             color: white;
@@ -18,34 +19,45 @@
             font-size: 22px;
             letter-spacing: 1px;
         }
+
         h2 {
             text-align: center;
             color: #333;
             margin-top: 20px;
         }
-        .container {
-            width: 100%;
+
+        .nav-container {
+            width: 85%;
+            margin: 20px auto;
             display: flex;
-            justify-content: center;
-            margin: 20px 0;
+            justify-content: space-between;
+            align-items: center;
         }
-        .btn-add {
-            background-color: #28a745;
-            color: white;
+
+        .btn-add, .btn-back {
             padding: 10px 18px;
-            border: none;
             border-radius: 5px;
-            text-decoration: none;
             font-weight: bold;
+            text-decoration: none;
+            transition: 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 8px;
             font-size: 15px;
-            transition: background-color 0.2s;
         }
-        .btn-add:hover {
-            background-color: #218838;
+
+        .btn-add {
+            background-color: #28a745;
+            color: white;
         }
+        .btn-add:hover { background-color: #218838; }
+
+        .btn-back {
+            background-color: #6c757d;
+            color: white;
+        }
+        .btn-back:hover { background-color: #5a6268; }
+
         table {
             width: 85%;
             margin: 0 auto 40px auto;
@@ -55,29 +67,59 @@
             border-radius: 6px;
             overflow: hidden;
         }
+
         th {
             background-color: #007bff;
             color: white;
             padding: 10px;
             text-transform: uppercase;
         }
+
         td {
             padding: 10px;
             text-align: center;
             border-bottom: 1px solid #ddd;
         }
+
         tr:hover {
             background-color: #f1f9ff;
             transition: 0.2s;
         }
+
         .status-active {
             color: #28a745;
             font-weight: bold;
         }
+
         .status-inactive {
             color: #dc3545;
             font-weight: bold;
         }
+
+        .btn-edit, .btn-delete {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .btn-edit {
+            background-color: #ffc107;
+        }
+        .btn-edit:hover {
+            background-color: #e0a800;
+        }
+
+        .btn-delete {
+            background-color: #dc3545;
+        }
+        .btn-delete:hover {
+            background-color: #b02a37;
+        }
+
         footer {
             text-align: center;
             color: #666;
@@ -93,10 +135,9 @@
 
     <h2>Daftar Role User</h2>
 
-    <div class="container">
-        <a href="{{ route('admin.role-user.create') }}" class="btn-add">
-            <span style="font-size: 18px;">➕</span> Tambah Role User
-        </a>
+    <div class="nav-container">
+        <a href="{{ route('admin.dashboard') }}" class="btn-back">⬅ Kembali ke Dashboard</a>
+        <a href="{{ route('admin.role-user.create') }}" class="btn-add">➕ Tambah Role User</a>
     </div>
 
     <table>
@@ -107,6 +148,7 @@
                 <th>Email</th>
                 <th>Role</th>
                 <th>Status</th>
+                <th>Aksi</th>
             </tr>
         </thead>
         <tbody>
@@ -123,10 +165,18 @@
                             <span class="status-inactive">Nonaktif</span>
                         @endif
                     </td>
+                    <td>
+                        <a href="{{ route('admin.role-user.edit', $ru->idrole_user) }}" class="btn-edit">✏ Edit</a>
+                        <form action="{{ route('admin.role-user.destroy', $ru->idrole_user) }}" method="POST" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-delete" onclick="return confirm('Yakin ingin menghapus data ini?')">🗑 Hapus</button>
+                        </form>
+                    </td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="5">Tidak ada data role user.</td>
+                    <td colspan="6">Tidak ada data role user.</td>
                 </tr>
             @endforelse
         </tbody>

@@ -9,5 +9,11 @@ class Kategori extends Model
     protected $table = 'kategori';
     protected $primaryKey = 'idkategori';
     public $timestamps = false;
-    protected $fillable = ['nama_kategori'];
+    public $incrementing = false; // ID tidak auto increment
+    protected $keyType = 'int';
+    
+    protected $fillable = [
+        'idkategori',      // Tambahkan ini agar bisa diisi manual
+        'nama_kategori'
+    ];
 }
