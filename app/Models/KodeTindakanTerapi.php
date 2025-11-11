@@ -9,8 +9,11 @@ class KodeTindakanTerapi extends Model
     protected $table = 'kode_tindakan_terapi';
     protected $primaryKey = 'idkode_tindakan_terapi';
     public $timestamps = false;
+    public $incrementing = false; // ID tidak auto increment
+    protected $keyType = 'int';
 
     protected $fillable = [
+        'idkode_tindakan_terapi',  // Tambahkan ini agar bisa diisi manual
         'kode',
         'deskripsi_tindakan_terapi',
         'idkategori',

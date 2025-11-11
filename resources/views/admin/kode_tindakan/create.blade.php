@@ -1,6 +1,7 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
     <title>Tambah Kode Tindakan</title>
     <style>
         body {
@@ -18,7 +19,7 @@
             letter-spacing: 1px;
         }
         .form-container {
-            width: 50%;
+            width: 60%;
             margin: 40px auto;
             background: white;
             padding: 25px;
@@ -31,15 +32,16 @@
         }
         label {
             display: block;
-            margin: 10px 0 5px;
+            margin: 15px 0 5px;
             color: #333;
             font-weight: bold;
         }
-        input[type="text"] {
+        input[type="text"], select {
             width: 100%;
             padding: 10px;
             border: 1px solid #bbb;
             border-radius: 5px;
+            box-sizing: border-box;
         }
         .btn-submit {
             background-color: #007bff;
@@ -59,12 +61,17 @@
             background-color: #6c757d;
             color: white;
             padding: 8px 12px;
-            text-decoration: none;
             border-radius: 5px;
+            text-decoration: none;
             margin-top: 10px;
         }
         .btn-back:hover {
             background-color: #5a6268;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 13px;
+            margin-top: 5px;
         }
         footer {
             text-align: center;
@@ -76,15 +83,51 @@
     </style>
 </head>
 <body>
-    <header>Tambah Kode Tindakan</header>
+    <header>Tambah Kode Tindakan Terapi</header>
 
     <div class="form-container">
         <h2>Form Tambah Kode Tindakan</h2>
 
         <form action="{{ route('admin.kode-tindakan.store') }}" method="POST">
             @csrf
-            <label for="nama_kode_tindakan">Nama Kode Tindakan:</label>
-            <input type="text" id="nama_kode_tindakan" name="nama_kode_tindakan" required>
+            
+            <label for="kode">Kode Tindakan:</label>
+            <input type="text" id="kode" name="kode" value="{{ old('kode') }}" required>
+            @error('kode')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
+
+            <label for="deskripsi_tindakan_terapi">Deskripsi Tindakan:</label>
+            <input type="text" id="deskripsi_tindakan_terapi" name="deskripsi_tindakan_terapi" value="{{ old('deskripsi_tindakan_terapi') }}" required>
+            @error('deskripsi_tindakan_terapi')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
+
+            <label for="idkategori">Kategori:</label>
+            <select id="idkategori" name="idkategori" required>
+                <option value="">-- Pilih Kategori --</option>
+                @foreach($kategori as $k)
+                    <option value="{{ $k->idkategori }}" {{ old('idkategori') == $k->idkategori ? 'selected' : '' }}>
+                        {{ $k->nama_kategori }}
+                    </option>
+                @endforeach
+            </select>
+            @error('idkategori')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
+
+            <label for="idkategori_klinis">Kategori Klinis:</label>
+            <select id="idkategori_klinis" name="idkategori_klinis" required>
+                <option value="">-- Pilih Kategori Klinis --</option>
+                @foreach($kategoriKlinis as $kk)
+                    <option value="{{ $kk->idkategori_klinis }}" {{ old('idkategori_klinis') == $kk->idkategori_klinis ? 'selected' : '' }}>
+                        {{ $kk->nama_kategori_klinis }}
+                    </option>
+                @endforeach
+            </select>
+            @error('idkategori_klinis')
+                <div class="error-message">{{ $message }}</div>
+            @enderror
 
             <button type="submit" class="btn-submit">Simpan</button>
         </form>

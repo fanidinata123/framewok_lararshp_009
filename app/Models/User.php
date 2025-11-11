@@ -13,18 +13,20 @@ class User extends Authenticatable
     protected $table = 'user';
     protected $primaryKey = 'iduser';
     public $timestamps = false;
+    public $incrementing = false;
+    protected $keyType = 'int';
 
-    protected $fillable = ['nama', 'email', 'password'];
+    protected $fillable = ['iduser', 'nama', 'email', 'password'];
     protected $hidden = ['password'];
 
-    // 🔹 Relasi ke Role (many-to-many lewat role_user)
+    // Relasi ke Role (many-to-many lewat role_user)
     public function roles()
     {
         return $this->belongsToMany(Role::class, 'role_user', 'iduser', 'idrole')
                     ->withPivot('status');
     }
 
-    // 🔹 Relasi opsional ke Pemilik (kalau dipakai di modul)
+    // Relasi opsional ke Pemilik
     public function pemilik()
     {
         return $this->hasOne(Pemilik::class, 'iduser', 'iduser');

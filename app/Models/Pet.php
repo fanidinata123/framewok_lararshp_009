@@ -9,8 +9,11 @@ class Pet extends Model
     protected $table = 'pet';
     protected $primaryKey = 'idpet';
     public $timestamps = false;
+    public $incrementing = false; // ID tidak auto increment
+    protected $keyType = 'int';
 
     protected $fillable = [
+        'idpet',
         'nama',
         'tanggal_lahir',
         'warna_tanda',

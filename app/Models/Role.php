@@ -9,10 +9,12 @@ class Role extends Model
     protected $table = 'role';
     protected $primaryKey = 'idrole';
     public $timestamps = false;
+    public $incrementing = false;
+    protected $keyType = 'int';
 
-    protected $fillable = ['nama_role'];
+    protected $fillable = ['idrole', 'nama_role'];
 
-    // 🔹 Relasi ke User lewat tabel pivot role_user
+    // Relasi ke User lewat tabel pivot role_user
     public function users()
     {
         return $this->belongsToMany(User::class, 'role_user', 'idrole', 'iduser')

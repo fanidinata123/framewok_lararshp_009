@@ -9,11 +9,20 @@ class Pemilik extends Model
     protected $table = 'pemilik';
     protected $primaryKey = 'idpemilik';
     public $timestamps = false;
-    protected $fillable = ['no_wa', 'alamat', 'iduser'];
+    public $incrementing = false;
+    protected $keyType = 'int';
 
-    // Relasi ke model User
+    protected $fillable = ['idpemilik', 'no_wa', 'alamat', 'iduser'];
+
+    // Relasi ke tabel user
     public function user()
     {
         return $this->belongsTo(User::class, 'iduser', 'iduser');
+    }
+
+    // Relasi ke Pet (one to many)
+    public function pets()
+    {
+        return $this->hasMany(Pet::class, 'idpemilik', 'idpemilik');
     }
 }
