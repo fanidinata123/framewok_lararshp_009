@@ -1,66 +1,55 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard Pemilik</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f0f4ff;
-            margin: 0;
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 22px;
-        }
-        nav {
-            background: #0056b3;
-            padding: 10px;
-            text-align: center;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 20px;
-            font-weight: bold;
-        }
-        nav a:hover {
-            text-decoration: underline;
-        }
-        .content {
-            text-align: center;
-            margin-top: 40px;
-        }
-        footer {
-            text-align: center;
-            margin-top: 40px;
-            color: #777;
-        }
-    </style>
-</head>
-<body>
-<header>Dashboard Pemilik</header>
+@extends('layouts.lte.main_pemilik')
 
-<nav>
-    <a href="{{ route('pemilik.dashboard') }}">Dashboard</a>
-    <a href="{{ route('pemilik.pet') }}">Data Pet</a>
-    <a href="{{ route('logout') }}" 
-       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-       Logout
-    </a>
-</nav>
+@section('title', 'Dashboard')
 
-<div class="content">
-    <h2>Selamat Datang di Dashboard Pemilik</h2>
-    <p>Anda dapat melihat data pet yang Anda miliki.</p>
+@section('content')
+<div class="row">
+    <div class="col-lg-4 col-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>{{ $totalPet }}</h3>
+                <p>Total Pet Saya</p>
+            </div>
+            <div class="icon"><i class="bi bi-badge-vr"></i></div>
+            <a href="{{ route('pemilik.pet.index') }}" class="small-box-footer">
+                Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>{{ $temuMenunggu }}</h3>
+                <p>Temu Menunggu</p>
+            </div>
+            <div class="icon"><i class="bi bi-hourglass-split"></i></div>
+            <a href="{{ route('pemilik.temu-dokter.index') }}" class="small-box-footer">
+                Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+
+    <div class="col-lg-4 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>{{ $totalRekamMedis }}</h3>
+                <p>Total Rekam Medis</p>
+            </div>
+            <div class="icon"><i class="bi bi-file-medical"></i></div>
+            <a href="{{ route('pemilik.rekam-medis.index') }}" class="small-box-footer">
+                Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
 </div>
 
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
-    @csrf
-</form>
-
-<footer>© 2025 Sistem Informasi Klinik Hewan</footer>
-</body>
-</html>
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title"><i class="bi bi-info-circle"></i> Selamat Datang</h3>
+    </div>
+    <div class="card-body">
+        <p>Anda dapat melihat informasi pet, jadwal temu dokter, dan rekam medis dari panel ini.</p>
+    </div>
+</div>
+@endsection

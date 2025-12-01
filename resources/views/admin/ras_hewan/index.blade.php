@@ -31,7 +31,7 @@
 @endif
 
 <div class="nav-container">
-    <a href="{{ route('admin.dashboard') }}" class="btn btn-back">⬅ Kembali</a>
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-back">⬅ Kembali ke Dashboard</a>
     <a href="{{ route('admin.ras-hewan.create') }}" class="btn btn-add">➕ Tambah Ras</a>
 </div>
 

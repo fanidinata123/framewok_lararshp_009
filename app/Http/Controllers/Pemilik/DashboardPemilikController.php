@@ -4,20 +4,41 @@ namespace App\Http\Controllers\Pemilik;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
-use App\Models\Pet;
+use Illuminate\Support\Facades\DB;
 
 class DashboardPemilikController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
-        // Ambil data pet milik user yang sedang login
-        $pets = Pet::with(['rasHewan', 'pemilik'])
-                    ->whereHas('pemilik', function($q) use ($user) {
-                        $q->where('iduser', $user->iduser);
-                    })
-                    ->get();
+        $iduser = Auth::id();
+        
+        // Ambil data pemilik
+        $pemilik = DB::table('pemilik')->where('iduser', $iduser)->first();
+        
+        if (!$pemilik) {
+            return redirect()->route('login')->with('error', 'Data pemilik tidak ditemukan');
+        }
 
-        return view('pemilik.dashboard.index', compact('user', 'pets'));
+        // Hitung total pet
+        $totalPet = DB::table('pet')->where('idpemilik', $pemilik->idpemilik)->count();
+        
+        // Hitung temu dokter menunggu
+        $temuMenunggu = DB::table('temu_dokter')
+            ->join('pet', 'temu_dokter.idpet', '=', 'pet.idpet')
+            ->where('pet.idpemilik', $pemilik->idpemilik)
+            ->where('temu_dokter.status', '0')
+            ->count();
+        
+        // Hitung total rekam medis
+        $totalRekamMedis = DB::table('rekam_medis')
+            ->join('pet', 'rekam_medis.idpet', '=', 'pet.idpet')
+            ->where('pet.idpemilik', $pemilik->idpemilik)
+            ->count();
+
+        return view('pemilik.dashboard.index', compact(
+            'totalPet',
+            'temuMenunggu',
+            'totalRekamMedis'
+        ));
     }
 }

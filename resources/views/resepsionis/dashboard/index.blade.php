@@ -1,39 +1,92 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Dashboard Resepsionis</title>
-    <style>
-        body {font-family: Arial, sans-serif; background: #eef4ff; margin: 0;}
-        header {background: #007bff; color: white; text-align: center; padding: 15px; font-size: 22px;}
-        nav {background: #0056b3; padding: 10px; text-align: center;}
-        nav a {color: white; text-decoration: none; margin: 0 15px; font-weight: bold;}
-        section {text-align: center; padding: 50px; color: #333;}
-        footer {text-align: center; color: #777; padding: 10px; margin-top: 40px;}
-    </style>
-</head>
-<body>
+@extends('layouts.lte.main_resepsionis')
 
-<header>Dashboard Resepsionis</header>
+@section('title', 'Dashboard')
 
-<nav>
-    <a href="{{ route('resepsionis.dashboard') }}">Dashboard</a>
-    <a href="{{ route('resepsionis.pendaftaran') }}">Data Pendaftaran</a>
-    <a href="{{ route('logout') }}"
-       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-       Logout
-    </a>
-</nav>
+@section('content')
+<div class="row">
+    <!-- Total Pet -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-info">
+            <div class="inner">
+                <h3>{{ $totalPet }}</h3>
+                <p>Total Pet</p>
+            </div>
+            <div class="icon">
+                <i class="bi bi-badge-vr"></i>
+            </div>
+            <a href="{{ route('resepsionis.pet.index') }}" class="small-box-footer">
+                Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
 
-<section>
-    <h2>Selamat Datang di Dashboard Resepsionis</h2>
-    <p>Gunakan menu di atas untuk melihat data pendaftaran atau logout.</p>
-</section>
+    <!-- Total Pemilik -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+            <div class="inner">
+                <h3>{{ $totalPemilik }}</h3>
+                <p>Total Pemilik</p>
+            </div>
+            <div class="icon">
+                <i class="bi bi-people"></i>
+            </div>
+            <a href="{{ route('resepsionis.pemilik.index') }}" class="small-box-footer">
+                Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
 
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
-    @csrf
-</form>
+    <!-- Temu Menunggu -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+            <div class="inner">
+                <h3>{{ $temuMenunggu }}</h3>
+                <p>Temu Menunggu</p>
+            </div>
+            <div class="icon">
+                <i class="bi bi-hourglass-split"></i>
+            </div>
+            <a href="{{ route('resepsionis.temu-dokter.index') }}" class="small-box-footer">
+                Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
 
-<footer>© 2025 Sistem Informasi Klinik Hewan</footer>
+    <!-- Temu Hari Ini -->
+    <div class="col-lg-3 col-6">
+        <div class="small-box bg-danger">
+            <div class="inner">
+                <h3>{{ $temuHariIni }}</h3>
+                <p>Temu Hari Ini</p>
+            </div>
+            <div class="icon">
+                <i class="bi bi-calendar-check"></i>
+            </div>
+            <a href="{{ route('resepsionis.temu-dokter.index') }}" class="small-box-footer">
+                Lihat Detail <i class="fas fa-arrow-circle-right"></i>
+            </a>
+        </div>
+    </div>
+</div>
 
-</body>
-</html>
+<!-- Info Box -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">
+                    <i class="bi bi-info-circle"></i> Selamat Datang di Panel Resepsionis
+                </h3>
+            </div>
+            <div class="card-body">
+                <p>Anda dapat mengelola data pet, pemilik, dan temu dokter dari panel ini.</p>
+                <ul>
+                    <li><strong>Data Pet:</strong> Kelola informasi hewan peliharaan</li>
+                    <li><strong>Data Pemilik:</strong> Kelola informasi pemilik hewan</li>
+                    <li><strong>Temu Dokter:</strong> Kelola jadwal konsultasi dengan dokter</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection

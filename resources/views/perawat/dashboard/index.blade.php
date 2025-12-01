@@ -1,84 +1,119 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<title>Dashboard Perawat RSHP</title>
-<style>
-    body {
-        font-family: 'Segoe UI', Arial, sans-serif;
-        background-color: #eef6ff;
-        margin: 0;
-        padding: 0;
-    }
-    header {
-        background-color: #0d6efd;
-        color: white;
-        text-align: center;
-        padding: 20px 0;
-        font-size: 24px;
-        font-weight: bold;
-        letter-spacing: 1px;
-    }
-    nav {
-        background-color: #084298;
-        padding: 10px;
-        text-align: center;
-    }
-    nav a {
-        color: white;
-        text-decoration: none;
-        margin: 0 15px;
-        font-weight: 500;
-        transition: color 0.2s;
-    }
-    nav a:hover {
-        color: #ffc107;
-    }
-    main {
-        text-align: center;
-        padding: 40px;
-    }
-    .card {
-        display: inline-block;
-        background-color: white;
-        padding: 20px 40px;
-        border-radius: 8px;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-        margin-top: 20px;
-    }
-    button.logout {
-        background-color: #dc3545;
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-    button.logout:hover {
-        background-color: #bb2d3b;
-    }
-</style>
-</head>
-<body>
+@extends('layouts.lte.main_perawat')
 
-<header>RSHP Dashboard Perawat</header>
+@section('title', 'Dashboard Perawat')
 
-<nav>
-    <a href="{{ route('perawat.dashboard') }}">Dashboard</a>
-    <form action="{{ route('logout') }}" method="POST" style="display:inline;">
-        @csrf
-        <button type="submit" class="logout">Logout</button>
-    </form>
-</nav>
+@section('content')
+<div class="container-fluid">
 
-<main>
-    <div class="card">
-        <h2>Selamat Datang, Perawat!</h2>
-        <p>Anda berhasil login sebagai <strong>Perawat</strong>.</p>
-        <p>Sistem RSHP siap digunakan untuk melihat jadwal dan membantu pelayanan pasien.</p>
+  <h3 class="mb-4">Dashboard Perawat</h3>
+
+  <!-- STATISTIK -->
+  <h5 class="mb-3">Statistik</h5>
+  <div class="row">
+
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="small-box text-bg-primary">
+        <div class="inner">
+          <h3>{{ $countPasien ?? 0 }}</h3>
+          <p>Total Pasien</p>
+        </div>
+        <a href="{{ route('perawat.pasien.index') }}" class="small-box-footer">
+          Lihat Data <i class="bi bi-arrow-right-circle"></i>
+        </a>
+      </div>
     </div>
-</main>
 
-</body>
-</html>
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="small-box text-bg-warning">
+        <div class="inner">
+          <h3>{{ $countRekamMedis ?? 0 }}</h3>
+          <p>Rekam Medis</p>
+        </div>
+        <a href="{{ route('perawat.rekam-medis.index') }}" class="small-box-footer">
+          Lihat Data <i class="bi bi-arrow-right-circle"></i>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INFORMASI TAMBAHAN -->
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h3 class="card-title">Selamat Datang</h3>
+        </div>
+        <div class="card-body">
+          <h5>Halo, {{ Auth::user()->nama }}!</h5>
+          <p class="text-muted">Anda login sebagai Perawat</p>
+          <hr>
+          <p>Sistem Informasi Klinik Hewan membantu Anda mengelola:</p>
+          <ul>
+            <li>Data pasien (hewan peliharaan)</li>
+            <li>Rekam medis lengkap (CRUD)</li>
+            <li>Detail tindakan dan terapi (View)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-info text-white">
+          <h3 class="card-title">Quick Links</h3>
+        </div>
+        <div class="card-body">
+          <div class="list-group">
+            <a href="{{ route('perawat.pasien.index') }}" class="list-group-item list-group-item-action">
+              <i class="bi bi-bug"></i> Data Pasien
+            </a>
+            <a href="{{ route('perawat.rekam-medis.index') }}" class="list-group-item list-group-item-action">
+              <i class="bi bi-file-earmark-medical"></i> Rekam Medis
+            </a>
+            <a href="{{ route('perawat.profil') }}" class="list-group-item list-group-item-action">
+              <i class="bi bi-person-circle"></i> Profil Saya
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- REKAM MEDIS TERBARU -->
+  @if(isset($rekamTerbaru) && $rekamTerbaru->count() > 0)
+  <h5 class="mb-3 mt-4">Rekam Medis Terbaru</h5>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>Tanggal</th>
+                  <th>Nama Pet</th>
+                  <th>Pemilik</th>
+                  <th>Diagnosa</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($rekamTerbaru as $rekam)
+                <tr>
+                  <td>{{ \Carbon\Carbon::parse($rekam->created_at)->format('d/m/Y') }}</td>
+                  <td>{{ $rekam->nama_pet }}</td>
+                  <td>{{ $rekam->nama_pemilik }}</td>
+                  <td>{{ Str::limit($rekam->diagnosa, 50) }}</td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  @endif
+
+</div>
+@endsection

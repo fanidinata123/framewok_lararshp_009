@@ -34,7 +34,7 @@
 @endif
 
 <div class="nav-container">
-    <a href="{{ route('admin.dashboard') }}" class="btn btn-back">⬅ Kembali</a>
+    <a href="{{ route('admin.dashboard') }}" class="btn btn-back">⬅ Kembali ke Dashboard</a>
     <a href="{{ route('admin.role-user.create') }}" class="btn btn-add">➕ Tambah Role User</a>
 </div>
 

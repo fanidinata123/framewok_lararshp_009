@@ -31,6 +31,36 @@
         <li class="nav-item"><a href="{{ route('admin.role.index') }}" class="nav-link"><i class="bi bi-shield-lock"></i> <p>Role</p></a></li>
         <li class="nav-item"><a href="{{ route('admin.role-user.index') }}" class="nav-link"><i class="bi bi-person-gear"></i> <p>Role User</p></a></li>
         <li class="nav-item"><a href="{{ route('admin.user.index') }}" class="nav-link"><i class="bi bi-people"></i> <p>User</p></a></li>
+
+        <li class="nav-header">TRANSAKSI</li>
+
+        <li class="nav-item">
+          <a href="{{ route('admin.temu-dokter.index') }}" class="nav-link">
+            <i class="bi bi-calendar-check"></i>
+            <p>Temu Dokter</p>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a href="{{ route('admin.rekam-medis.index') }}" class="nav-link">
+            <i class="bi bi-file-earmark-medical"></i>
+            <p>Rekam Medis</p>
+          </a>
+        </li>
+
+        <li class="nav-header">AKUN</li>
+
+        <li class="nav-item">
+          <a href="{{ route('logout') }}" class="nav-link"
+             onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+            <i class="bi bi-box-arrow-right"></i>
+            <p>Logout</p>
+          </a>
+          <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+            @csrf
+          </form>
+        </li>
+        
       </ul>
     </nav>
   </div>

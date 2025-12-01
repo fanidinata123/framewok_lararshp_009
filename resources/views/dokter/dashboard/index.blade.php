@@ -1,84 +1,145 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-<meta charset="UTF-8">
-<title>Dashboard Dokter RSHP</title>
-<style>
-    body {
-        font-family: 'Segoe UI', Arial, sans-serif;
-        background-color: #eef6ff;
-        margin: 0;
-        padding: 0;
-    }
-    header {
-        background-color: #0d6efd;
-        color: white;
-        text-align: center;
-        padding: 20px 0;
-        font-size: 24px;
-        font-weight: bold;
-        letter-spacing: 1px;
-    }
-    nav {
-        background-color: #084298;
-        padding: 10px;
-        text-align: center;
-    }
-    nav a {
-        color: white;
-        text-decoration: none;
-        margin: 0 15px;
-        font-weight: 500;
-        transition: color 0.2s;
-    }
-    nav a:hover {
-        color: #ffc107;
-    }
-    main {
-        text-align: center;
-        padding: 40px;
-    }
-    .card {
-        display: inline-block;
-        background-color: white;
-        padding: 20px 40px;
-        border-radius: 8px;
-        box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-        margin-top: 20px;
-    }
-    button.logout {
-        background-color: #dc3545;
-        color: white;
-        border: none;
-        padding: 8px 16px;
-        border-radius: 5px;
-        cursor: pointer;
-        font-weight: bold;
-    }
-    button.logout:hover {
-        background-color: #bb2d3b;
-    }
-</style>
-</head>
-<body>
+@extends('layouts.lte.main_dokter')
 
-<header>RSHP Dashboard Dokter</header>
+@section('title', 'Dashboard Dokter')
 
-<nav>
-    <a href="{{ route('dokter.dashboard') }}">Dashboard</a>
-    <form action="{{ route('logout') }}" method="POST" style="display:inline;">
-        @csrf
-        <button type="submit" class="logout">Logout</button>
-    </form>
-</nav>
+@section('content')
+<div class="container-fluid">
 
-<main>
-    <div class="card">
-        <h2>Selamat Datang, Dokter!</h2>
-        <p>Anda berhasil login sebagai <strong>Dokter</strong>.</p>
-        <p>Sistem RSHP siap digunakan untuk melihat data pasien dan rekam medis.</p>
+  <h3 class="mb-4">Dashboard Dokter</h3>
+
+  <!-- STATISTIK -->
+  <h5 class="mb-3">Statistik</h5>
+  <div class="row">
+
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="small-box text-bg-primary">
+        <div class="inner">
+          <h3>{{ $countPasien ?? 2 }}</h3>
+          <p>Total Pasien</p>
+        </div>
+        <a href="{{ route('dokter.pasien.index') }}" class="small-box-footer">
+          Lihat Data <i class="bi bi-arrow-right-circle"></i>
+        </a>
+      </div>
     </div>
-</main>
 
-</body>
-</html>
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="small-box text-bg-info">
+        <div class="inner">
+          <h3>{{ $countTemuDokter ?? 2 }}</h3>
+          <p>Total Temu Dokter</p>
+        </div>
+        <a href="{{ route('dokter.temu-dokter.index') }}" class="small-box-footer">
+          Lihat Data <i class="bi bi-arrow-right-circle"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="small-box text-bg-warning">
+        <div class="inner">
+          <h3>{{ $countRekamMedis ?? 1 }}</h3>
+          <p>Rekam Medis</p>
+        </div>
+        <a href="{{ route('dokter.rekam-medis.index') }}" class="small-box-footer">
+          Lihat Data <i class="bi bi-arrow-right-circle"></i>
+        </a>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INFORMASI TAMBAHAN -->
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h3 class="card-title">Selamat Datang</h3>
+        </div>
+        <div class="card-body">
+          <h5>Halo, {{ Auth::user()->nama }}!</h5>
+          <p class="text-muted">Anda login sebagai Dokter</p>
+          <hr>
+          <p>Sistem Informasi Klinik Hewan membantu Anda mengelola:</p>
+          <ul>
+            <li>Data pasien (hewan peliharaan)</li>
+            <li>Jadwal temu dokter</li>
+            <li>Rekam medis lengkap</li>
+            <li>Detail tindakan dan terapi</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header bg-info text-white">
+          <h3 class="card-title">Quick Links</h3>
+        </div>
+        <div class="card-body">
+          <div class="list-group">
+            <a href="{{ route('dokter.pasien.index') }}" class="list-group-item list-group-item-action">
+              <i class="bi bi-bug"></i> Data Pasien
+            </a>
+            <a href="{{ route('dokter.temu-dokter.index') }}" class="list-group-item list-group-item-action">
+              <i class="bi bi-calendar-check"></i> Jadwal Temu Dokter
+            </a>
+            <a href="{{ route('dokter.rekam-medis.index') }}" class="list-group-item list-group-item-action">
+              <i class="bi bi-file-earmark-medical"></i> Rekam Medis
+            </a>
+            <a href="{{ route('dokter.profil') }}" class="list-group-item list-group-item-action">
+              <i class="bi bi-person-circle"></i> Profil Saya
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JADWAL TERBARU (Opsional - bisa diaktifkan jika ada data) -->
+  @if(isset($temuTerbaru) && $temuTerbaru->count() > 0)
+  <h5 class="mb-3 mt-4">Jadwal Temu Terbaru</h5>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                  <th>No Urut</th>
+                  <th>Waktu Daftar</th>
+                  <th>Nama Pet</th>
+                  <th>Pemilik</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach($temuTerbaru as $temu)
+                <tr>
+                  <td>{{ $temu->no_urut }}</td>
+                  <td>{{ \Carbon\Carbon::parse($temu->waktu_daftar)->format('d/m/Y H:i') }}</td>
+                  <td>{{ $temu->nama_pet }}</td>
+                  <td>{{ $temu->nama_pemilik }}</td>
+                  <td>
+                    @if($temu->status == 'Selesai')
+                      <span class="badge bg-success">{{ $temu->status }}</span>
+                    @elseif($temu->status == 'Menunggu')
+                      <span class="badge bg-warning">{{ $temu->status }}</span>
+                    @else
+                      <span class="badge bg-info">{{ $temu->status }}</span>
+                    @endif
+                  </td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  @endif
+
+</div>
+@endsection

@@ -1,108 +1,49 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Data Pet</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #eef4ff;
-            margin: 0;
-        }
-        header {
-            background-color: #007bff;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 22px;
-        }
-        nav {
-            background: #0056b3;
-            padding: 10px;
-            text-align: center;
-        }
-        nav a {
-            color: white;
-            text-decoration: none;
-            margin: 0 20px;
-            font-weight: bold;
-        }
-        table {
-            width: 85%;
-            margin: 30px auto;
-            border-collapse: collapse;
-            background: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-        th {
-            background-color: #007bff;
-            color: white;
-            padding: 10px;
-        }
-        td {
-            padding: 8px;
-            text-align: center;
-            border-bottom: 1px solid #ddd;
-        }
-        tr:hover {
-            background-color: #f1f9ff;
-        }
-        footer {
-            text-align: center;
-            color: #777;
-            padding: 10px;
-            margin-top: 40px;
-        }
-    </style>
-</head>
-<body>
-<header>Data Pet</header>
+@extends('layouts.lte.main_pemilik')
 
-<nav>
-    <a href="{{ route('pemilik.dashboard') }}">Dashboard</a>
-    <a href="{{ route('logout') }}" 
-       onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-       Logout
-    </a>
-</nav>
+@section('title', 'Pet Saya')
 
-<h2 style="text-align:center;">Daftar Pet</h2>
-<table>
-    <thead>
-        <tr>
-            <th>No</th>
-            <th>Nama Pet</th>
-            <th>Tanggal Lahir</th>
-            <th>Warna/Tanda</th>
-            <th>Jenis Kelamin</th>
-            <th>Ras Hewan</th>
-            <th>Pemilik</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach ($pets as $index => $p)
-        <tr>
-            <td>{{ $index + 1 }}</td>
-            <td>{{ $p->nama }}</td>
-            <td>{{ $p->tanggal_lahir }}</td>
-            <td>{{ $p->warna_tanda }}</td>
-            <td>
-                @if($p->jenis_kelamin == 'L') Jantan
-                @elseif($p->jenis_kelamin == 'P') Betina
-                @else -
-                @endif
-            </td>
-            <td>{{ $p->rasHewan->nama_ras ?? '-' }}</td>
-            <td>{{ $p->pemilik->user->nama ?? '-' }}</td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
-
-<form id="logout-form" action="{{ route('logout') }}" method="POST" style="display:none;">
-    @csrf
-</form>
-
-<footer>© 2025 Sistem Informasi Klinik Hewan</footer>
-</body>
-</html>
+@section('content')
+<div class="card">
+    <div class="card-header">
+        <h3 class="card-title">Daftar Pet yang Saya Miliki</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
+            @forelse($pets as $pet)
+            <div class="col-md-4 mb-3">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <i class="bi bi-badge-vr text-primary"></i> {{ $pet->nama }}
+                        </h5>
+                        <hr>
+                        <p class="card-text">
+                            <strong>Jenis:</strong> {{ $pet->nama_jenis_hewan }}<br>
+                            <strong>Ras:</strong> {{ $pet->nama_ras }}<br>
+                            <strong>Jenis Kelamin:</strong> 
+                            @if($pet->jenis_kelamin == 'J')
+                                <span class="badge bg-primary">Jantan</span>
+                            @else
+                                <span class="badge bg-danger">Betina</span>
+                            @endif
+                            <br>
+                            <strong>Tanggal Lahir:</strong> {{ \Carbon\Carbon::parse($pet->tanggal_lahir)->format('d/m/Y') }}<br>
+                            <strong>Umur:</strong> {{ \Carbon\Carbon::parse($pet->tanggal_lahir)->age }} tahun<br>
+                            @if($pet->warna_tanda)
+                                <strong>Warna/Tanda:</strong> {{ $pet->warna_tanda }}
+                            @endif
+                        </p>
+                    </div>
+                </div>
+            </div>
+            @empty
+            <div class="col-12">
+                <div class="alert alert-info text-center">
+                    <i class="bi bi-info-circle"></i> Anda belum memiliki pet yang terdaftar
+                </div>
+            </div>
+            @endforelse
+        </div>
+    </div>
+</div>
+@endsection
